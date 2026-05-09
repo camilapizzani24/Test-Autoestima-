@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { questions, getProfile } from "./questions";
+import { questions, getProfile } from "./questions"; 
 
 type Step = "intro" | "quiz" | "email" | "result";
 
@@ -55,9 +55,7 @@ export default function App() {
         body: JSON.stringify({
           fields: [
             { name: "firstname", value: name.trim() },
-            { name: "email", value: email.trim() },
-            { name: "test_score", value: String(score) },
-            { name: "test_profile", value: profile.key },
+            { name: "email", value: email.trim() }
           ],
           context: {
             pageUri: window.location.href,
