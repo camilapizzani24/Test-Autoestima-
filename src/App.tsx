@@ -425,7 +425,7 @@ function Result({ name, score, profile, onRestart }: { name: string; score: numb
             </ul>
           </div>
           <div className="mt-10 rounded-2xl border border-dashed border-[#d9c2a8] bg-[#fbf5ec] p-6">
-            <div className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[#b07560]">Tu siguiente paso</div>
+            <div className="mb-2 text-[10px] uppercase tracking-[0.35em] text-[#b07560]">Tu siguiente paso</div>
             <p className="font-serif text-xl italic text-[#3a2f28] sm:text-2xl">{profile.invitation}</p>
           </div>
 
