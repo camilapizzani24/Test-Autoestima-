@@ -6,7 +6,7 @@ type Step = "intro" | "quiz" | "email" | "result";
 const WHATSAPP = "https://wa.link/8ptn4f";
 const CALENDLY = "https://calendly.com/sanamenteconsulta/30min";
 const HUBSPOT_PORTAL_ID = "51437469";
-const HUBSPOT_FORM_GUID = "5af2be09-4614-46b4-b66b-807fcda42969";
+const HUBSPOT_FORM_GUID = "9a307b5c-b492-4b90-939f-33ad9e72b63c";
 const HUBSPOT_REGION = "na1";
 
 export default function App() {
