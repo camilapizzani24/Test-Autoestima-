@@ -47,15 +47,13 @@ export default function App() {
     }
     setEmailError("");
     setSending(true);
-setEmailError("");
-setSending(true);
 
 try {
-  // ✅ Ya tiene TU ID de formulario puesto, no tienes que modificar NADA
-  const respuesta = await fetch('https://api.mailerlite.com/webforms/submit/187223975385892706', {
+  const respuesta = await fetch('https://app.mailerlite.com/webforms/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
+      form_id: 187223975385892706, // ✅ Ya puse TU ID, no modificas nada
       email: email.trim(),
       fields: {
         name: name.trim()
@@ -63,17 +61,15 @@ try {
     })
   });
 
-  if(respuesta.ok) {
-    console.log("✅ Suscriptor guardado, automatizacion DISPARADA!")
-  }
+  const resultado = await respuesta.json();
+  console.log("✅ Respuesta MailerLite:", resultado);
 
 } catch (err) {
-  console.error("Error en el envio:", err);
-
+  console.error("Error:", err);
 } finally {
   setSending(false);
-  // ✅ Arregle el error que tenias: incluso si falla algo, el usuario SIEMPRE ve su resultado
   setStep("result");
+}
 }
     } catch (err) {
       console.error("No se pudo enviar a HubSpot:", err);
