@@ -35,40 +35,35 @@ export default function App() {
     }, 220);
   }
 
-  async function submitEmail(e: React.FormEvent) {
-    e.preventDefault();
-    if (!name.trim()) {
-      setEmailError("Contame tu nombre para personalizar tu resultado.");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError("Necesito un email válido para enviarte el resultado.");
-      return;
-    }
-    setEmailError("");
-    setSending(true);
+ async function submitEmail(e: React.FormEvent) {
 
-try {
-  const respuesta = await fetch('https://app.mailerlite.com/webforms/submit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      form_id: 187223975385892706, // ✅ Ya puse TU ID, no modificas nada
-      email: email.trim(),
-      fields: {
-        name: name.trim()
-      }
-    })
-  });
+  e.preventDefault();
+  setEmailError("");
+  setSending(true);
 
-  const resultado = await respuesta.json();
-  console.log("✅ Respuesta MailerLite:", resultado);
+  try {
+    await fetch("https://connect.mailerlite.com/api/subscribers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer 029d2586350f41308ee925e4226ac37c"
+      },
+      body: JSON.stringify({
+        email: email.trim(),
+        fields: { name: name.trim() },
+        groups: [187223975385892706]
+      })
+    });
 
-} catch (err) {
-  console.error("Error:", err);
-} finally {
-  setSending(false);
-  setStep("result");
+  } catch (todoError) {
+    console.log("Error:", todoError);
+
+  } finally {
+    setSending(false);
+    setStep("result");
+  }
+
 }
 }
     } catch (err) {
