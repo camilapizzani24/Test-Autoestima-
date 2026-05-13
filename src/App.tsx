@@ -47,22 +47,34 @@ export default function App() {
     }
     setEmailError("");
     setSending(true);
+setEmailError("");
+setSending(true);
 
-    try {
-      await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fields: [
-            { name: "firstname", value: name.trim() },
-            { name: "email", value: email.trim() }
-          ],
-          context: {
-            pageUri: window.location.href,
-            pageName: "Test de Autoestima - SanaMente Consulta",
-          },
-        }),
-      });
+try {
+  // ✅ Ya tiene TU ID de formulario puesto, no tienes que modificar NADA
+  const respuesta = await fetch('https://api.mailerlite.com/webforms/submit/187223975385892706', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: email.trim(),
+      fields: {
+        name: name.trim()
+      }
+    })
+  });
+
+  if(respuesta.ok) {
+    console.log("✅ Suscriptor guardado, automatizacion DISPARADA!")
+  }
+
+} catch (err) {
+  console.error("Error en el envio:", err);
+
+} finally {
+  setSending(false);
+  // ✅ Arregle el error que tenias: incluso si falla algo, el usuario SIEMPRE ve su resultado
+  setStep("result");
+}
     } catch (err) {
       console.error("No se pudo enviar a HubSpot:", err);
     }
