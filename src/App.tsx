@@ -52,7 +52,7 @@ export default function App() {
       body: JSON.stringify({
         email: email.trim(),
         fields: { name: name.trim() },
-        groups: [187223975385892706]
+        groups: [187125573679580933]
       })
     });
 
