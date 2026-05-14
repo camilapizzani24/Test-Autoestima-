@@ -47,7 +47,7 @@ export default function App() {
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": "Bearer 029d2586350f41308ee925e4226ac37c"
+       "Authorization": Bearer ${import.meta.env.VITE_MAILERLITE_API_KEY},
       },
       body: JSON.stringify({
         email: email.trim(),
