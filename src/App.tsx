@@ -57,22 +57,10 @@ export default function App() {
     });
   } catch (todoError) {
     console.log("Error:", todoError);
-
   } finally {
     setSending(false);
     setStep("result");
   }
-
-}
-}
-    } catch (err) {
-      console.error("No se pudo enviar a HubSpot:", err);
-    }
-
-    setSending(false);
-    setStep("result");
-  }
-
   function restart() {
     setStep("intro");
     setCurrent(0);
