@@ -372,8 +372,7 @@ function EmailGate({
       </div>
     </div>
   );
-}
-
+  
 function Result({ name, score, profile, onRestart }: { name: string; score: number; profile: ReturnType<typeof getProfile>; onRestart: () => void }) {
   const max = 40;
   const percent = Math.round((score / max) * 100);
@@ -456,5 +455,6 @@ function Result({ name, score, profile, onRestart }: { name: string; score: numb
         </p>
       </div>
     </div>
-  );
+ )
 }
+export default App
