@@ -48,19 +48,21 @@ export default function App() {
     setSending(true);
 
     try {
-      await fetch("https://connect.mailerlite.com/api/subscribers", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_MAILERLITE_API_KEY}`,
-        },
-        body: JSON.stringify({
-          email: email.trim(),
-          fields: { name: name.trim() },
-          groups: [187125573679580933],
-        }),
-      });
+  await fetch("/api/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email.trim(),
+      name: name.trim(),
+      score: score // o como se llame tu variable de puntaje
+    }),
+  });
+} catch (error) {
+  console.log("Error:", error);
+} finally {
+  setSending(false);
+  setStep("result");
+}
     } catch (todoError) {
       console.log("Error:", todoError);
     } finally {
