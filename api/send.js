@@ -1,32 +1,28 @@
 export default async function handler(req, res) {
-  if (req.method!== 'POST') {
+  if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email, name, score } = req.body;
-  console.log("Datos recibidos del test:", { email, name, score });
+  const { to, subject, html } = req.body;
 
   try {
-    const response = await fetch("https://connect.mailerlite.com/api/subscribers", {
-      method: "POST",
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: Bearer ${process.env.MAILERLITE_API_KEY},
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        email: email,
-        fields: { name: name },
-        groups: [187125573679580933],
-      }),
+        from: 'test@tu-dominio.com',
+        to,
+        subject,
+        html
+      })
     });
 
     const data = await response.json();
-    console.log("Respuesta de Mailerlite:", data);
-
-    return res.status(200).json({ success: true, data });
+    return res.status(response.status).json(data);
   } catch (error) {
-    console.error("Error:", error);
-    return res.status(500).json({ error: 'Error sending to Mailerlite' });
+    return res.status(500).json({ error: error.message });
   }
 }
