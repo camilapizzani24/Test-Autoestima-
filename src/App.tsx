@@ -61,11 +61,21 @@ export default function App() {
   console.log("Error:", error);
 } finally {
   setSending(false);
+ try {
+  // Aquí va tu llamada a la API
+  await fetch('/api/mailerlite-subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email })
+  });
+
   setStep("result");
+
+} catch (todoError) {
+  console.log("Error:", todoError);
+} finally {
+  // tu código del finally
 }
-    } catch (todoError) {
-      console.log("Error:", todoError);
-    } finally {
       setSending(false);
       setStep("result");
     }
