@@ -12,7 +12,11 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.MAILERLITE_API_KEY}`
       },
-      body: JSON.stringify({ email, status: 'active' })
+      body: JSON.stringify({ 
+  email, 
+  status: 'active',
+  groups: ["187125573679580933"] 
+})
     });
 
     const data = await response.json();
