@@ -47,37 +47,46 @@ export default function App() {
     setEmailError("");
     setSending(true);
 
+   // Línea 50
+async function submitEmail(e: React.FormEvent) {
+  setEmailError("");
+  setSending(true);
+
+  try {
+    // PRIMERO: Agregar a MailerLite (esto es lo importante)
+    await fetch('/api/mailerlite-subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        email: email.trim(),
+        name: name.trim()
+      })
+    });
+
+    // DESPUÉS: Intentar enviar con Resend (puede fallar)
     try {
-  await fetch("/api/send", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email: email.trim(),
-      name: name.trim(),
-      score: score // o como se llame tu variable de puntaje
-    }),
-  });
-} catch (error) {
-  console.log("Error:", error);
-} finally {
-  setSending(false);
- try {
-  // Aquí va tu llamada a la API
-  await fetch('/api/mailerlite-subscribe', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email })
-  });
+      await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim(),
+          name: name.trim(),
+          score: score
+        })
+      });
+    } catch (resendError) {
+      console.log("Resend error (no crítico):", resendError);
+    }
 
-  setStep("result");
+    // Mostrar resultado
+    setStep("result");
 
-} catch (todoError) {
-  console.log("Error:", todoError);
-} finally {
-  // tu código del finally
+  } catch (error) {
+    console.log("Error general:", error);
+  } finally {
+    setSending(false);
+  }
 }
-      setSending(false);
-      setStep("result");
     }
   } // ← llave de cierre de submitEmail
 
