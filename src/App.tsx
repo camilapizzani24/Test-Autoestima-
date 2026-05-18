@@ -132,7 +132,7 @@ async function submitEmail(e: React.FormEvent) {
       </div>
     </div>
   );
-} // ← llave de cierre de App
+// ← llave de cierre de App
 
 // ─────────────────────────────────────────────
 // Componentes auxiliares (todos fuera de App)
