@@ -40,40 +40,46 @@ export default function App() {
     setEmail("");
   }
 
+  // ✅ FUNCIÓN CORREGIDA E INTEGRADA CON RESEND Y MAILERLITE
   async function submitEmail(e: React.FormEvent) {
     e.preventDefault();
     setEmailError("");
     setSending(true);
 
     try {
-      await fetch('/api/mailerlite-subscribe', {
+      // 1. Guardamos en MailerLite de fondo
+      fetch('/api/mailerlite-subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           email: email.trim(),
           name: name.trim()
         })
+      }).catch(err => console.log("Error silencioso Mailerlite:", err));
+
+      // 2. Enviamos el correo de Resend inmediatamente
+      const resendResponse = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim(),
+          name: name.trim(),
+          score: score,
+          profileTitle: profile.title,
+          profileDescription: profile.description,
+          profileInvitation: profile.invitation
+        })
       });
 
-      try {
-        await fetch("/api/send", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email.trim(),
-            name: name.trim(),
-            score: score
-          })
-        });
-      } catch (resendError) {
-        console.log("Resend error (no crítico):", resendError);
+      if (!resendResponse.ok) {
+        throw new Error("No se pudo enviar el correo de resultados");
       }
 
       setStep("result");
 
     } catch (error) {
       console.log("Error general:", error);
-      setEmailError("Hubo un error. Intentá de nuevo.");
+      setEmailError("Hubo un problema al procesar tu solicitud. Por favor intenta de nuevo.");
     } finally {
       setSending(false);
     }
@@ -377,6 +383,16 @@ function Result({ name, score, profile, onRestart }: { name: string; score: numb
       <div className="mt-6 rounded-2xl border border-[#e6d6c3] bg-white/60 p-5 text-center backdrop-blur-sm">
         <p className="text-xs tracking-wider text-[#6b5d52]">¿Conocés a alguien que necesite escuchar esto hoy? <a href="https://www.instagram.com/asesoramientopsi/" target="_blank" rel="noopener noreferrer" className="font-medium text-[#b07560] underline-offset-4 hover:underline">Compartir el test →</a></p>
       </div>
+    </div>
+  );
+}
+
+function BackgroundDecor() {
+  return (
+    <div className="pointer-events-none fixed inset-0 -z-10">
+      <div className="absolute -top-40 -left-32 h-96 w-96 rounded-full bg-[#e7d3c2] opacity-50 blur-3xl" />
+      <div className="absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full bg-[#d9b9a4] opacity-30 blur-3xl" />
+      <div className="absolute bottom-0 left-1/4 h-80 w-80 rounded-full bg-[#ede0cf] opacity-60 blur-3xl" />
     </div>
   );
 }
