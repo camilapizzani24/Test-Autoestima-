@@ -386,13 +386,3 @@ function Result({ name, score, profile, onRestart }: { name: string; score: numb
     </div>
   );
 }
-
-function BackgroundDecor() {
-  return (
-    <div className="pointer-events-none fixed inset-0 -z-10">
-      <div className="absolute -top-40 -left-32 h-96 w-96 rounded-full bg-[#e7d3c2] opacity-50 blur-3xl" />
-      <div className="absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full bg-[#d9b9a4] opacity-30 blur-3xl" />
-      <div className="absolute bottom-0 left-1/4 h-80 w-80 rounded-full bg-[#ede0cf] opacity-60 blur-3xl" />
-    </div>
-  );
-}
