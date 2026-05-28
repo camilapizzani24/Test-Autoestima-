@@ -4,7 +4,7 @@ import { questions, getProfile } from "./questions";
 type Step = "intro" | "quiz" | "email" | "result";
 
 const WHATSAPP = "https://wa.link/8ptn4f";
-const CALENDLY = "https://calendly.com/sanamenteconsulta/30min";
+const CALENDLY = "https://calendly.com/sanamenteconsulta/15min";
 
 export default function App() {
   const [step, setStep] = useState<Step>("intro");
