@@ -33,7 +33,7 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        from: 'SanaMente Consulta <onboarding@resend.dev>',
+       from: 'SanaMente Consulta <hola@sanamenteconsulta.com>',
         to: email,
         subject: `${name ? name + ', tu' : 'Tu'} perfil de autoestima está aquí 💛`,
         html
